@@ -1,10 +1,6 @@
 ﻿using MudSharp.Server.Core;
 using MudSharp.Server.Providers;
 using Ninject;
-using Ninject.Activation;
-using Ninject.Infrastructure.Disposal;
-using System;
-using System.Threading;
 
 namespace MudSharp.Server
 {

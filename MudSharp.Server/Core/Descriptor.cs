@@ -1,7 +1,6 @@
 ﻿using MudSharp.Data.Models.Accounts;
 using MudSharp.Data.Models.World.Actors;
 using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,7 +93,6 @@ namespace MudSharp.Server.Core
         public ConnectionState State { get; set; }
 
         #endregion
-
 
         #region Public methods
 

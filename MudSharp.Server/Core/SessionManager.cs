@@ -1,10 +1,8 @@
 ﻿using MudSharp.Data.Models.World.Actors;
 using MudSharp.Server.Providers;
-using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MudSharp.Server.Core
@@ -65,7 +63,6 @@ namespace MudSharp.Server.Core
         public KeyValuePair<string, Player> CurrentPlayers { get; set; }
 
         #endregion
-
 
         #region Public Methods
 
