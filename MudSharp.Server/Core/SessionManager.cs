@@ -2,6 +2,7 @@
 using MudSharp.Server.Providers;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace MudSharp.Server.Core
         /// <summary>
         /// The injected logging provider to use.
         /// </summary>
-        private ILoggingProvider _loggingProvider;
+        private readonly ILoggingProvider _loggingProvider;
 
         /// <summary>
         /// Constructor.
@@ -34,7 +35,6 @@ namespace MudSharp.Server.Core
         {
             Descriptors = new HashSet<Descriptor>();
             CurrentPlayers = new KeyValuePair<string, Player>();
-            
         }
 
 

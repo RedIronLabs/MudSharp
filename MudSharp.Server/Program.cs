@@ -1,44 +1,46 @@
-﻿using MudSharp.Server.Core;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using MudSharp.Server.Core;
 using MudSharp.Server.Providers;
-using Ninject;
 
-namespace MudSharp.Server
+var host = CreateHostBuilder(args)
+                .Build();
+
+var server = host.Services.GetService<IServer>();
+var game = host.Services.GetService<IGame>();
+
+server.StartServer();
+server.Listen();
+
+game.Run();
+
+// Since Game.Run() is blocking, we should only get here if the server is shutting down.
+server.Shutdown();
+
+#region DI Configuration
+/// <summary>
+/// Configures the DI container.
+/// </summary>
+static IHostBuilder CreateHostBuilder(string[] args)
 {
-    class Program
-    {
-        private static IKernel _kernel;
-        private static TcpServer _server;
-        private static Game _game;
-
-        static void Main(string[] args)
+    var hostBuilder = Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((context, builder) =>
         {
-            ConfigureNinject();
-
-            _server = new TcpServer(_kernel.Get<IConfigProvider>(), _kernel.Get<ILoggingProvider>());
-            _server.StartServer();
-            _server.Listen();
-
-            _game = new Game(_kernel.Get<IConfigProvider>(), _kernel.Get<ILoggingProvider>());
-            _game.Run();
-
-            // Since Game.Run() is blocking, we should only get here if the server is shutting down.
-            _server.Shutdown();
-        }
-
-        #region DI Configuration
-        /// <summary>
-        /// Configures the Ninject container.
-        /// </summary>
-        private static void ConfigureNinject()
+            builder.SetBasePath(Directory.GetCurrentDirectory());
+        })
+        .ConfigureServices((context, services) =>
         {
-            _kernel = new StandardKernel();
+            services
+               .AddSingleton<IConfigProvider, GlobalConfigProvider>()
+               .AddTransient<IAuthProvider, LocalAuthProvider>()
+               .AddSingleton<ILoggingProvider, LocalLoggingProvider>()
+               .AddSingleton<IServer, TcpServer>()
+               .AddSingleton<IGame, Game>(); ;
+        });
 
-            // Core
-            _kernel.Bind<IConfigProvider>().To<GlobalConfigProvider>();
-            _kernel.Bind<IAuthProvider>().To<LocalAuthProvider>();
-            _kernel.Bind<ILoggingProvider>().To<LocalLoggingProvider>();
-        }
-
-        #endregion
-    }
+    return hostBuilder;
 }
+
+#endregion
