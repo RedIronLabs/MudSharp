@@ -37,7 +37,6 @@ namespace MudSharp.Server.Core
             CurrentPlayers = new KeyValuePair<string, Player>();
         }
 
-
         /// <summary>
         /// Gets the current <see cref="SessionManager"/> instance.
         /// </summary>
@@ -72,10 +71,9 @@ namespace MudSharp.Server.Core
         /// <param name="client">The <see cref="TcpClient"/> to create the descriptor from.</param>
         public async Task NewDescriptorAsync(TcpClient client)
         {
-            var newDescriptor = new Descriptor(client);
-            Descriptors.Add(newDescriptor);
-
-            await newDescriptor.SendAsync("Username (new for new account): ");
+            var desc = new Descriptor(client);
+            Descriptors.Add(desc);
+            _ = new Connection(desc);
         }
 
         /// <summary>

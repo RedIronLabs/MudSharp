@@ -93,7 +93,7 @@ namespace MudSharp.Server.Core
         /// </summary>
         private void PulseZones()
         {
-
+            
         }
 
         /// <summary>

@@ -76,6 +76,7 @@ namespace MudSharp.Server.Core
                             _loggingProvider.LogMessage($"New connection from {client.Client.RemoteEndPoint.ToString()}");
 
                             await SessionManager.Instance.NewDescriptorAsync(client);
+
                         }
                     }
                 }

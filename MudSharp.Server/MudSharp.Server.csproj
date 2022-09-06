@@ -23,6 +23,8 @@
     <None Remove="Microsoft.Extensions.Hosting" />
     <None Remove="Microsoft.Extensions.Hosting.Abstractions" />
     <None Remove="Core\Implementations\" />
+    <None Remove="Core\Interfaces\" />
+    <None Remove="Providers\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
@@ -33,6 +35,8 @@
   <ItemGroup>
     <Folder Include="Core\Commands\" />
     <Folder Include="Core\Implementations\" />
+    <Folder Include="Core\Interfaces\" />
+    <Folder Include="Providers\Interfaces\" />
   </ItemGroup>
 
 </Project>
