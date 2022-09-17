@@ -1,7 +1,6 @@
 ﻿using MudSharp.Data.Models.Accounts;
 using MudSharp.Data.Models.World.Actors;
 using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,7 +94,6 @@ namespace MudSharp.Server.Core
 
         #endregion
 
-
         #region Public methods
 
         /// <summary>
@@ -108,7 +106,7 @@ namespace MudSharp.Server.Core
 
             var bytes = Encoding.UTF8.GetBytes(message);
 
-            await Client.GetStream().WriteAsync(bytes, 0, bytes.Length);
+            await Client.GetStream().WriteAsync(bytes);
         }
 
         /// <summary>
@@ -121,7 +119,31 @@ namespace MudSharp.Server.Core
 
             var bytes = Encoding.UTF8.GetBytes(message);
 
-            Client.GetStream().Write(bytes, 0, bytes.Length);
+            Client.GetStream().Write(bytes);
+        }
+
+        public async Task<string> ReadAsync()
+        {
+            var buffer = new byte[4096];
+
+            if (!IsConnected) return null;
+
+            var byteCount = await Client.GetStream().ReadAsync(buffer);
+
+            var request = Encoding.UTF8.GetString(buffer, 0, byteCount);
+            return request;
+        }
+
+        public string Read()
+        {
+            var buffer = new byte[4096];
+
+            if (!IsConnected) return null;
+
+            var byteCount = Client.GetStream().Read(buffer);
+
+            var request = Encoding.UTF8.GetString(buffer, 0, byteCount);
+            return request;
         }
 
         /// <summary>
@@ -133,6 +155,10 @@ namespace MudSharp.Server.Core
 
             Client.Close();
         }
+
+        #endregion
+
+        #region Private Methods
 
         #endregion
     }

@@ -1,10 +1,7 @@
 ﻿using MudSharp.Server.Providers;
-using Ninject;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,18 +10,19 @@ namespace MudSharp.Server.Core
     /// <summary>
     /// TCP server.
     /// </summary>
-    internal sealed class TcpServer
+    internal sealed class TcpServer : IServer
     {
         private readonly IConfigProvider _configProvider;
         private readonly ILoggingProvider _loggingProvider;
         private bool _accept = false;
         private TcpListener _listener;
-        private CancellationTokenSource _tokenSource;
+        private readonly CancellationTokenSource _tokenSource;
 
         public TcpServer(IConfigProvider configProvider, ILoggingProvider loggingProvider)
         {
             _configProvider = configProvider;
             _loggingProvider = loggingProvider;
+
             _tokenSource = new CancellationTokenSource();
         }
 
@@ -78,6 +76,7 @@ namespace MudSharp.Server.Core
                             _loggingProvider.LogMessage($"New connection from {client.Client.RemoteEndPoint.ToString()}");
 
                             await SessionManager.Instance.NewDescriptorAsync(client);
+
                         }
                     }
                 }

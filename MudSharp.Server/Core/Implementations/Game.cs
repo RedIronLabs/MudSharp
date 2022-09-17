@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MudSharp.Server.Core
 {
-    internal sealed class Game
+    internal sealed class Game : IGame
     {
         private readonly IConfigProvider _configProvider;
         private readonly ILoggingProvider _loggingProvider;
@@ -93,7 +93,7 @@ namespace MudSharp.Server.Core
         /// </summary>
         private void PulseZones()
         {
-
+            
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace MudSharp.Server.Core
         /// </summary>
         private void CleanupDescriptors()
         {
-            
+
         }
     }
 }

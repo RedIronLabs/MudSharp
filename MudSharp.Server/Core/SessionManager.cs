@@ -1,10 +1,9 @@
 ﻿using MudSharp.Data.Models.World.Actors;
 using MudSharp.Server.Providers;
-using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MudSharp.Server.Core
@@ -27,7 +26,7 @@ namespace MudSharp.Server.Core
         /// <summary>
         /// The injected logging provider to use.
         /// </summary>
-        private ILoggingProvider _loggingProvider;
+        private readonly ILoggingProvider _loggingProvider;
 
         /// <summary>
         /// Constructor.
@@ -36,9 +35,7 @@ namespace MudSharp.Server.Core
         {
             Descriptors = new HashSet<Descriptor>();
             CurrentPlayers = new KeyValuePair<string, Player>();
-            
         }
-
 
         /// <summary>
         /// Gets the current <see cref="SessionManager"/> instance.
@@ -66,7 +63,6 @@ namespace MudSharp.Server.Core
 
         #endregion
 
-
         #region Public Methods
 
         /// <summary>
@@ -75,10 +71,9 @@ namespace MudSharp.Server.Core
         /// <param name="client">The <see cref="TcpClient"/> to create the descriptor from.</param>
         public async Task NewDescriptorAsync(TcpClient client)
         {
-            var newDescriptor = new Descriptor(client);
-            Descriptors.Add(newDescriptor);
-
-            await newDescriptor.SendAsync("Username (new for new account): ");
+            var desc = new Descriptor(client);
+            Descriptors.Add(desc);
+            _ = new Connection(desc);
         }
 
         /// <summary>
