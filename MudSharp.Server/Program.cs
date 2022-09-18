@@ -18,10 +18,12 @@ namespace MudSharp.Server
         {
             ConfigureNinject();
 
+            Console.WriteLine("Starting server");
             _server = new TcpServer(_kernel.Get<IConfigProvider>(), _kernel.Get<ILoggingProvider>());
             _server.StartServer();
             _server.Listen();
 
+            Console.WriteLine("Starting game");
             _game = new Game(_kernel.Get<IConfigProvider>(), _kernel.Get<ILoggingProvider>());
             _game.Run();
 

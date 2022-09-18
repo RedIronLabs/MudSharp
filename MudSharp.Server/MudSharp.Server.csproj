@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Commands\**" />
+    <EmbeddedResource Remove="Core\Commands\**" />
+    <None Remove="Core\Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.2" />
@@ -22,10 +28,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\Commands\" />
   </ItemGroup>
 
 </Project>

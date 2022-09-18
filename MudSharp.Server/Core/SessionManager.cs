@@ -35,8 +35,7 @@ namespace MudSharp.Server.Core
         private SessionManager()
         {
             Descriptors = new HashSet<Descriptor>();
-            CurrentPlayers = new KeyValuePair<string, Player>();
-            
+            CurrentPlayers = new KeyValuePair<string, Player>();            
         }
 
 
@@ -77,6 +76,7 @@ namespace MudSharp.Server.Core
         {
             var newDescriptor = new Descriptor(client);
             Descriptors.Add(newDescriptor);
+            Console.WriteLine("NewDescriptorAsync");
 
             await newDescriptor.SendAsync("Username (new for new account): ");
         }

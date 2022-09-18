@@ -107,6 +107,7 @@ namespace MudSharp.Server.Core
             if (!IsConnected) return;
 
             var bytes = Encoding.UTF8.GetBytes(message);
+            Console.WriteLine("Send: " + message);
 
             await Client.GetStream().WriteAsync(bytes, 0, bytes.Length);
         }
@@ -120,6 +121,7 @@ namespace MudSharp.Server.Core
             if (!IsConnected) return;
 
             var bytes = Encoding.UTF8.GetBytes(message);
+            Console.WriteLine("Send: " + message);
 
             Client.GetStream().Write(bytes, 0, bytes.Length);
         }
@@ -130,7 +132,7 @@ namespace MudSharp.Server.Core
         public void Disconnect()
         {
             if (!IsConnected) return;
-
+            Console.WriteLine("Disconnect.");
             Client.Close();
         }
 
