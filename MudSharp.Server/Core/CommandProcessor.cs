@@ -8,7 +8,7 @@ namespace MudSharp.Server.Core
     {
         public static void ProcessCommand(string input)
         {
-
+            Console.WriteLine("Process command: " + input);
         }
     }
 }
